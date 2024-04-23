@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+import "./App.css";
+import pokeman from "./pokeman.json";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{
+        margin: "auto",
+        width: 800,
+        paddingTop: "1rem",
+      }}
+    >
+      <h1 className="title"> Pokeman Search</h1>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>base</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pokeman.slice(0, 20).map((pokeman) => (
+            <tr key={pokeman.id}>
+              <td>{pokeman.name.english}</td>
+              <td>{pokeman.type.join(" , " )}</td>
+              <td>{pokeman.base.HP}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
