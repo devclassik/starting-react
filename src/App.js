@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import PropTypes from "prop-types";
-
+import styled from "@emotion/styled/macro";
 import "./App.css";
 import React from "react";
 
@@ -21,12 +21,12 @@ const PokemonInfo = ({ name, base }) => (
     <table>
       <thead></thead>
       <tbody>
-      {Object.keys(base).map((key) => (
-        <tr key={key}>
-          <td>{key}</td>
-          <td>{base[key]}</td>
-        </tr>
-      ))}
+        {Object.keys(base).map((key) => (
+          <tr key={key}>
+            <td>{key}</td>
+            <td>{base[key]}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
@@ -56,28 +56,50 @@ PokemonInfo.prototype = {
   }),
 };
 
+const Title = styled.h1`
+  text-align: center;
+`;
+
+const TwoColumnLayout = styled.div`
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-column-gap: 1rem;
+`;
+
+const Container = styled.div`
+  margin: auto;
+  width: 800px;
+  padding-top: 1rem;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  font-size: x-large;
+  padding: 0.2rem;
+`;
+
 function App() {
   const [filter, filterSet] = React.useState("");
   const [pokeman, pokemanSet] = React.useState([]);
   const [selectedItem, selectedItemSet] = React.useState(null);
 
-React.useEffect(() => {
-  fetch("http://localhost:3000/pokeman.json")
-  .then((resp) => resp.json())
-  .then((data) => pokemanSet(data));
-}, []);
+  React.useEffect(() => {
+    fetch("http://localhost:3000/starting-react/pokeman.json")
+      .then((resp) => resp.json())
+      .then((data) => pokemanSet(data));
+  }, []);
 
   return (
-    <div
+    <Container
       style={{
         margin: "auto",
         width: 800,
         paddingTop: "1rem",
       }}
     >
-      <h1 className="title"> Pokemon Search</h1>
+      <Title> Pokemon Search</Title>
 
-      <div
+      <TwoColumnLayout
         style={{
           display: "grid",
           gridTemplateColumns: "70% 30%",
@@ -85,7 +107,7 @@ React.useEffect(() => {
         }}
       >
         <div>
-          <input
+          <Input
             placeholder="Search..."
             value={filter}
             onChange={(evt) => filterSet(evt.target.value)}
@@ -117,8 +139,8 @@ React.useEffect(() => {
           </table>
         </div>
         {selectedItem && <PokemonInfo {...selectedItem} />}
-      </div>
-    </div>
+      </TwoColumnLayout>
+    </Container>
   );
 }
 
