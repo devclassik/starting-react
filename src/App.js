@@ -2,8 +2,6 @@
 import PropTypes from "prop-types";
 
 import "./App.css";
-import pokeman from "./pokeman.json";
-import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 
 const PokemonRow = ({ pokeman, onSelect }) => (
@@ -60,7 +58,15 @@ PokemonInfo.prototype = {
 
 function App() {
   const [filter, filterSet] = React.useState("");
+  const [pokeman, pokemanSet] = React.useState([]);
   const [selectedItem, selectedItemSet] = React.useState(null);
+
+React.useEffect(() => {
+  fetch("http://localhost:3000/pokeman.json")
+  .then((resp) => resp.json())
+  .then((data) => pokemanSet(data));
+}, []);
+
   return (
     <div
       style={{
@@ -69,7 +75,7 @@ function App() {
         paddingTop: "1rem",
       }}
     >
-      <h1 className="title"> Pokeman Search</h1>
+      <h1 className="title"> Pokemon Search</h1>
 
       <div
         style={{
